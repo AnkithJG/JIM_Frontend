@@ -9,7 +9,6 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -17,11 +16,13 @@ import Config from 'react-native-config';
 import { Alert, AlertText, AlertIcon } from "@/components/ui/alert"
 import { InfoIcon } from "@/components/ui/icon"
 import { Input, InputField } from "@/components/ui/input"
+import { Button, ButtonText } from "@/components/ui/button"
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFocusedP, setIsFocusedP] = useState(false);
   const handleLogin = async () => {
     if (!username || !password) {
       <Alert action="error" variant="solid">
@@ -66,7 +67,10 @@ const LoginScreen = ({ navigation }) => {
 
   const navigateToSignup = () => {
     navigation.navigate('Signup');
-    Alert.alert('Navigation', 'Navigating to Sign Up page');
+      <Alert action="info" variant="solid">
+          <AlertIcon as={InfoIcon} />
+          <AlertText>Navigating to signup page...</AlertText>
+      </Alert>
   };
 
   return (
@@ -79,28 +83,66 @@ const LoginScreen = ({ navigation }) => {
           <View style={styles.formContainer}>
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Username</Text>
-              <Input variant="rounded" size="lg">
-                <InputField
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Enter username"
-                  placeholderTextColor="#ddd"
-                  autoCapitalize="none"
-                  keyboardType="username-address"
-                />
-            </Input>
+                <Input
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    backgroundColor: '#c13e58',
+                    borderRadius: 40,
+                    paddingHorizontal: 10,
+                    color: '#fff',
+                    fontSize: 16,
+                    borderWidth: isFocused ? 2 : 0,
+                    borderColor: isFocused ? '#fff' : 'transparent',
+                  }}
+                >
+                  <InputField
+                    value={username}
+                    onChangeText={setUsername}
+                    placeholder="Enter username"
+                    placeholderTextColor="#ddd"
+                    autoCapitalize="none"
+                    keyboardType="username-address"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    style={{
+                      color: '#fff',
+                      fontSize: 16,
+                    }}
+                  />
+                </Input>
             </View>
 
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Password</Text>
-              <TextInput
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                placeholder="Enter password"
-                placeholderTextColor="#ddd"
-                secureTextEntry
-              />
+              <Input
+                style={{
+                    width: '100%',
+                    height: 50,
+                    backgroundColor: '#c13e58',
+                    borderRadius: 40,
+                    paddingHorizontal: 10,
+                    color: '#fff',
+                    fontSize: 16,
+                    borderWidth: isFocusedP ? 2 : 0,
+                    borderColor: isFocusedP ? '#fff' : 'transparent',
+                }}
+              >
+                <InputField
+                  type="password"
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="Enter password"
+                  autoCapitalize="none"
+                  onFocus={() => setIsFocusedP(true)}
+                  onBlur={() => setIsFocusedP(false)}
+                  style={{
+                    color: '#fff',
+                    fontSize: 16,
+                    height: 50,
+                  }}
+                />
+              </Input>
             </View>
 
             <View style={styles.signupPrompt}>
@@ -111,11 +153,12 @@ const LoginScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-                <MaterialIcons name="close" size={32} color="#fff" />
+              <TouchableOpacity onPress={handleCancel} style={styles.button}>
+                <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.submitButton} onPress={handleLogin}>
-                <MaterialIcons name="check" size={32} color="#fff" />
+
+              <TouchableOpacity onPress={handleLogin} style={styles.button}>
+                <Text style={styles.buttonText}>Log In</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -138,43 +181,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 200,
   },
   formContainer: {
     width: '100%',
+    height: '90%',
     maxWidth: 400,
-    backgroundColor: 'rgba(255, 91, 122, 0.6)',
+    backgroundColor: '#ff5b7a',
     borderRadius: 25,
     padding: 25,
-    paddingTop: 90,
+    paddingTop: 70,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 10,
-    position: 'relative',
-  },
-  profileImageContainer: {
-    position: 'absolute',
-    top: -60,
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#c13e58',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 5,
     shadowRadius: 5,
-    elevation: 6,
-    overflow: 'hidden',
-  },
-  profileImagePlaceholder: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 60,
-    backgroundColor: '#c13e58',
+    elevation: 15,
+    position: 'relative',
   },
   inputGroup: {
     width: '100%',
@@ -185,15 +208,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 6,
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#c13e58',
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    color: '#fff',
-    fontSize: 16,
   },
   signupPrompt: {
     flexDirection: 'row',
@@ -216,10 +230,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-  cancelButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+  button: {
+    width: 100,          
+    height: 50,          
+    borderRadius: 16,    
     backgroundColor: '#3b84d8',
     justifyContent: 'center',
     alignItems: 'center',
@@ -229,18 +243,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  submitButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#3b84d8',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

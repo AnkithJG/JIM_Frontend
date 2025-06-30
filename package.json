@@ -13,6 +13,7 @@
     "@expo/metro-runtime": "~4.0.1",
     "@expo/vector-icons": "^14.0.4",
     "@gluestack-ui/alert": "^0.1.16",
+    "@gluestack-ui/button": "^1.0.14",
     "@gluestack-ui/icon": "^0.1.27",
     "@gluestack-ui/input": "^0.1.38",
     "@gluestack-ui/nativewind-utils": "^1.0.26",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/react": "~18.3.12",
     "jscodeshift": "^0.15.2"
   },
   "private": true,
