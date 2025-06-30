@@ -7,66 +7,6 @@ const { width, height } = Dimensions.get('window');
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-      
-      {/* Main Content Area */}
-      <View style={styles.content}>
-        {/* Extra Large Mascot */}
-        <Image 
-          source={require('../assets/mascot1.png')} 
-          style={styles.mascot}
-          resizeMode="contain"
-        />
-        
-        {/* Very Large Streak Container */}
-        <View style={styles.streakContainer}>
-          <Image 
-            source={require('../assets/bluefire.png')} 
-            style={styles.fireIcon}
-            resizeMode="contain"
-          />
-          <View style={styles.streakTextContainer}>
-            <Text style={styles.streakNumber}>7</Text>
-            <Text style={styles.streakLabel}>Day{'\n'}Streak</Text>
-          </View>
-        </View>
-        
-        {/* Shop Timeline Text with Stacked Effect */}
-        <View style={styles.titleArea}>
-          <Text style={styles.title}>SHOP TIMELINE</Text>
-          <Text style={[styles.title, styles.titleShadow1]}>SHOP TIMELINE</Text>
-          <Text style={[styles.title, styles.titleShadow2]}>SHOP TIMELINE</Text>
-    
-        </View>
-        
-        {/* Main Content Card */}
-        <View style={styles.card}>
-          {/* Card content would go here */}
-        </View>
-      </View>
-      
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="calendar-outline" size={24} color="#fff" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="time-outline" size={24} color="#fff" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="user-o" size={24} color="#fff" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="cart-outline" size={24} color="#fff" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="settings-outline" size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
