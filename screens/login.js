@@ -14,14 +14,20 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import Config from 'react-native-config';
+import { Alert, AlertText, AlertIcon } from "@/components/ui/alert"
+import { InfoIcon } from "@/components/ui/icon"
+import { Input, InputField } from "@/components/ui/input"
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please enter your email and password');
+    if (!username || !password) {
+      <Alert action="error" variant="solid">
+        <AlertIcon as={InfoIcon} />
+        <AlertText>Please enter your username and password</AlertText>
+    </Alert>
       return;
     }
 
@@ -33,22 +39,28 @@ const LoginScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(`http://10.0.2.2:3000/login`, {
-        email,
+        username,
         password,
       });
 
       if (response.data.token) {
         navigation.navigate('Home');
-        Alert.alert('Success', 'Login successful!');
+        <Alert action="success" variant="solid">
+          <AlertIcon as={InfoIcon} />
+          <AlertText>Login Successful</AlertText>
+        </Alert>
       }
     } catch (err) {
       console.error('Login error:', err.response?.data?.error || err.message);
-      Alert.alert('Error', err.response?.data?.error || 'Login failed. Please check your credentials.');
+      <Alert action="error" variant="solid">
+          <AlertIcon as={InfoIcon} />
+          <AlertText>Login failed. Please check your credentials.</AlertText>
+      </Alert>
     }
   };
 
   const handleCancel = () => {
-    setEmail('');
+    setUsername('');
     setPassword('');
   };
 
@@ -65,21 +77,18 @@ const LoginScreen = ({ navigation }) => {
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.formContainer}>
-            <View style={styles.profileImageContainer}>
-              <View style={styles.profileImagePlaceholder} />
-            </View>
-
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Enter email"
-                placeholderTextColor="#a55"
-                autoCapitalize="none"
-                keyboardType="email-address"
-              />
+              <Text style={styles.label}>Username</Text>
+              <Input variant="rounded" size="lg">
+                <InputField
+                  value={username}
+                  onChangeText={setUsername}
+                  placeholder="Enter username"
+                  placeholderTextColor="#ddd"
+                  autoCapitalize="none"
+                  keyboardType="username-address"
+                />
+            </Input>
             </View>
 
             <View style={styles.inputGroup}>
@@ -89,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
                 value={password}
                 onChangeText={setPassword}
                 placeholder="Enter password"
-                placeholderTextColor="#a55"
+                placeholderTextColor="#ddd"
                 secureTextEntry
               />
             </View>
