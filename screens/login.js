@@ -9,14 +9,13 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
+  Image,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import Config from 'react-native-config';
 import { Alert, AlertText, AlertIcon } from "@/components/ui/alert"
 import { InfoIcon } from "@/components/ui/icon"
 import { Input, InputField } from "@/components/ui/input"
-import { Button, ButtonText } from "@/components/ui/button"
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -75,6 +74,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image
+        source={require('../assets/jim_logo.png')}
+        style={{ width: '100%', height: 400, resizeMode: 'contain' }}
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
@@ -87,7 +90,8 @@ const LoginScreen = ({ navigation }) => {
                   style={{
                     width: '100%',
                     height: 50,
-                    backgroundColor: '#c13e58',
+                    //backgroundColor: '#8f2e3f',
+                    backgroundColor: '#6a2230',
                     borderRadius: 40,
                     paddingHorizontal: 10,
                     color: '#fff',
@@ -119,7 +123,7 @@ const LoginScreen = ({ navigation }) => {
                 style={{
                     width: '100%',
                     height: 50,
-                    backgroundColor: '#c13e58',
+                    backgroundColor: '#6a2230',
                     borderRadius: 40,
                     paddingHorizontal: 10,
                     color: '#fff',
@@ -181,16 +185,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 200,
+    paddingTop: 45,
   },
   formContainer: {
     width: '100%',
-    height: '90%',
     maxWidth: 400,
-    backgroundColor: '#ff5b7a',
+    //backgroundColor: '#ff5b7a',
+    backgroundColor: '#c13e58',
     borderRadius: 25,
     padding: 25,
-    paddingTop: 70,
+    paddingTop: 40,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
@@ -204,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 6,
@@ -216,11 +220,11 @@ const styles = StyleSheet.create({
   },
   signupText: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 15,
   },
   signupLink: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
@@ -247,7 +251,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },
+  },  
+
 });
 
 export default LoginScreen;
