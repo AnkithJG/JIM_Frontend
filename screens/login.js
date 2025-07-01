@@ -74,10 +74,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require('../assets/copy.png')}
-        style={{ width: '100%', height: 115, resizeMode: 'contain' }}
-      />
+        <Image
+          source={require('../assets/copy.png')}
+          style={{ width: '100%', height: 115, resizeMode: 'contain' }}
+        />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     width: 100,          
     height: 50,          
     borderRadius: 16,    
-    backgroundColor: '#3b84d8',
+    backgroundColor: '#279CF6',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',

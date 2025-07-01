@@ -1,144 +1,169 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const { width, height } = Dimensions.get('window');
+const CustomBottomNavigation = ({ onTabPress }) => {
+  const [activeTab, setActiveTab] = useState('Home');
 
-const HomeScreen = () => {
+  const tabs = [
+    { name: 'Home', icon: 'calendar', label: 'Calendar' },
+    { name: 'Timeline', icon: 'time', label: 'Timeline' },
+    { name: 'Profile', icon: 'person', label: 'Profile' },
+    { name: 'Shop', icon: 'storefront', label: 'Shop' },
+    { name: 'Settings', icon: 'settings', label: 'Settings' },
+  ];
+
+  const handleTabPress = (tabName) => {
+    setActiveTab(tabName);
+    if (onTabPress) {
+      onTabPress(tabName);
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.tabBar}>
+        {tabs.map((tab) => (
+          <TouchableOpacity
+            key={tab.name}
+            style={[
+              styles.tabButton,
+              activeTab === tab.name && styles.activeTab,
+            ]}
+            onPress={() => handleTabPress(tab.name)}
+          >
+            <Icon
+              name={activeTab === tab.name ? tab.icon : `${tab.icon}-outline`}
+              size={24}
+              color={activeTab === tab.name ? '#ff5b7a' : '#666'}
+            />
+            <Text
+              style={[
+                styles.tabLabel,
+                activeTab === tab.name && styles.activeTabLabel,
+              ]}
+            >
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </SafeAreaView>
+  );
+};
+
+// Example usage in your main component
+const HomeScreen = () => {
+  const [currentScreen, setCurrentScreen] = useState('Home');
+
+  const handleTabPress = (tabName) => {
+    setCurrentScreen(tabName);
+    // Add your navigation logic here
+    console.log(`Navigating to ${tabName}`);
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'Home':
+        return (
+          <View style={styles.screen}>
+            <Text style={styles.screenText}>Home Screen</Text>
+          </View>
+        );
+      case 'Timeline':
+        return (
+          <View style={styles.screen}>
+            <Text style={styles.screenText}>Timeline Screen</Text>
+          </View>
+        );
+      case 'Profile':
+        return (
+          <View style={styles.screen}>
+            <Text style={styles.screenText}>Profile Screen</Text>
+          </View>
+        );
+      case 'Shop':
+        return (
+          <View style={styles.screen}>
+            <Text style={styles.screenText}>Shop Screen</Text>
+          </View>
+        );
+      case 'Settings':
+        return (
+          <View style={styles.screen}>
+            <Text style={styles.screenText}>Settings Screen</Text>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <View style={styles.mainContainer}>
+      <View style={styles.content}>
+        {renderScreen()}
+      </View>
+      <CustomBottomNavigation onTabPress={handleTabPress} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: '#ff5b7a',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 40,
-    paddingHorizontal: 15,
-    paddingBottom: 10,
-  },
-  backButton: {
-    padding: 5,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 15,
-    color: '#000',
   },
   content: {
     flex: 1,
-    paddingHorizontal: 0,
-    position: 'relative',
   },
-  mascot: {
-    width: width * 0.45,
-    height: width * 0.45,
-    position: 'absolute',
-    top: 0,
-    left: 15,
-    zIndex: 10,
-  },
-  streakContainer: {
-    position: 'absolute',
-    top: 20,
-    right: 15,
-    zIndex: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#3b7bd8',
-    borderRadius: 30,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    width: width * 0.45,
-    justifyContent: 'center',
-  },
-  fireIcon: {
-    width: 50,
-    height: 50,
-    marginRight: 8,
-  },
-  streakTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  streakNumber: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: 'white',
-    marginRight: 5,
-  },
-  streakLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    lineHeight: 20,
-  },
-  titleArea: {
-    width: '100%',
-    alignItems: 'center',
-    marginTop: width * 0.4,
-    position: 'relative',
-    height: 50,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'white',
-    position: 'absolute',
-    zIndex: 5,
-  },
-  titleShadow1: {
-    top: 3,
-    opacity: 0.7,
-  },
-  titleShadow2: {
-    top: 6,
-    opacity: 0.4,
-  },
-  blueBar: {
-    position: 'absolute',
-    height: 100,
-    width: 30,
-    backgroundColor: '#3b7bd8',
-    borderRadius: 15,
-    left: '55%',
-    top: -25,
-    zIndex: 1,
-  },
-  card: {
-    flex: 1,
-    backgroundColor: 'rgba(230, 77, 109, 0.7)',
-    borderRadius: 15,
-    marginTop: 15,
-    marginHorizontal: 15,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 10,
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#ff5b7a',
-    height: 60,
-    paddingBottom: 5,
-  },
-  navItem: {
+  screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+  },
+  screenText: {
+    fontSize: 24,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  container: {
+    backgroundColor: '#fff',
+  },
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#e0e0e0',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
+  tabButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  activeTab: {
+    backgroundColor: '#f0f0f0',
+  },
+  tabLabel: {
+    fontSize: 10,
+    marginTop: 2,
+    color: '#666',
+    fontWeight: '500',
+  },
+  activeTabLabel: {
+    color: '#ff5b7a',
+    fontWeight: '600',
   },
 });
+
 
 export default HomeScreen;
