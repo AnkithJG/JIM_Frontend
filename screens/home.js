@@ -12,49 +12,41 @@ const CustomBottomNavigation = ({ onTabPress }) => {
   const [activeTab, setActiveTab] = useState('Home');
 
   const tabs = [
-    { name: 'Home', icon: 'calendar', label: 'Calendar' },
-    { name: 'Timeline', icon: 'time', label: 'Timeline' },
-    { name: 'Profile', icon: 'person', label: 'Profile' },
-    { name: 'Shop', icon: 'storefront', label: 'Shop' },
-    { name: 'Settings', icon: 'settings', label: 'Settings' },
+    { name: 'Home', icon: 'calendar' },
+    { name: 'Timeline', icon: 'time' },
+    { name: 'Profile', icon: 'person' },
+    { name: 'Shop', icon: 'cart' },
+    { name: 'Settings', icon: 'settings' },
   ];
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
-    if (onTabPress) {
-      onTabPress(tabName);
-    }
+    if (onTabPress) onTabPress(tabName);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.navContainer}>
       <View style={styles.tabBar}>
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab.name}
-            style={[
-              styles.tabButton,
-              activeTab === tab.name && styles.activeTab,
-            ]}
-            onPress={() => handleTabPress(tab.name)}
-          >
-            <Icon
-              name={activeTab === tab.name ? tab.icon : `${tab.icon}-outline`}
-              size={24}
-              color={activeTab === tab.name ? '#ff5b7a' : '#666'}
-            />
-            <Text
-              style={[
-                styles.tabLabel,
-                activeTab === tab.name && styles.activeTabLabel,
-              ]}
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.name;
+          return (
+            <TouchableOpacity
+              key={tab.name}
+              onPress={() => handleTabPress(tab.name)}
+              style={styles.tabButton}
             >
-              {tab.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <View style={[styles.iconWrapper, isActive && styles.activeIconWrapper]}>
+                <Icon
+                  name={isActive ? tab.icon : `${tab.icon}-outline`}
+                  size={35}
+                  color="#fff"
+                />
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -118,7 +110,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#ff5b7a',
+    backgroundColor: '#ff5b7a', // main screen background
   },
   content: {
     flex: 1,
@@ -133,37 +125,44 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  container: {
-    backgroundColor: '#fff',
+  navContainer: {
+    backgroundColor: '#c13e58',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    paddingVertical: 8,
+    backgroundColor: 'transparent',
+    paddingVertical: 12,
     paddingHorizontal: 10,
+    height: 80,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   tabButton: {
-    flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
-    borderRadius: 8,
+    justifyContent: 'center',
+    padding: 10,
   },
-  activeTab: {
-    backgroundColor: '#f0f0f0',
+  iconWrapper: {
+    width: 50,
+    height: 50,
+    borderRadius: 25, 
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden', 
   },
-  tabLabel: {
-    fontSize: 10,
-    marginTop: 2,
-    color: '#666',
-    fontWeight: '500',
-  },
-  activeTabLabel: {
-    color: '#ff5b7a',
-    fontWeight: '600',
+  activeIconWrapper: {
+    backgroundColor: '#6a2230',
   },
 });
-
 
 export default HomeScreen;
