@@ -5,43 +5,56 @@ import {
   Image,
   StyleSheet,
   Pressable,
-  Animated,
   Dimensions,
 } from "react-native";
+
+
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  sequence,
+  Easing,
+  withDelay
+} from "react-native-reanimated";
 
 const { height } = Dimensions.get("window");
 
 export default function AnimatedSplash({ onContinue }) {
-  const logoScale = useRef(new Animated.Value(0)).current;
-  const textFade = useRef(new Animated.Value(0)).current;
+  const imageScale = useSharedValue(0);
+  const textOpacity = useSharedValue(0);
 
   useEffect(() => {
-    Animated.sequence([
-      Animated.spring(logoScale, {
-        toValue: 1,
-        useNativeDriver: true,
-        friction: 5,
-        tension: 80,
-      }),
-      Animated.timing(textFade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-    ]).start();
+    imageScale.value = withTiming(1, {
+      duration: 700,
+      easing: Easing.bounce,
+    });
+
+    textOpacity.value = withDelay(
+      500,
+      withTiming(1, {
+        duration: 500,
+        easing: Easing.linear,
+      })
+    );
   }, []);
+
+  const imageStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: imageScale.value }],
+  }));
+
+  const textStyle = useAnimatedStyle(() => ({
+    opacity: textOpacity.value,
+  }));
 
   return (
     <Pressable style={styles.container} onPress={onContinue}>
       <Animated.Image
         source={require("../assets/copy.png")}
-        style={[
-          { width: '100%', height: 115, resizeMode: 'contain' },
-          { transform: [{ scale: logoScale }] },
-        ]}
-        resizeMode="contain"
+        style={[{ width: '100%', height: 120, resizeMode: 'contain' }, imageStyle]}
       />
-      <Animated.Text style={[styles.text, { opacity: textFade }]}>
+      <Animated.Text style={[styles.text, textStyle]}>
         Tap anywhere to continue
       </Animated.Text>
     </Pressable>
