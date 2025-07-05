@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CustomCalendar from './calendar'; 
 
 const CustomBottomNavigation = ({ onTabPress }) => {
   const [activeTab, setActiveTab] = useState('Home');
@@ -60,13 +62,17 @@ const HomeScreen = () => {
     console.log(`Navigating to ${tabName}`);
   };
 
+  const handleDateSelect = (date) => {
+    console.log('Selected date:', date);
+    // Add your date selection logic here
+  };
   const renderScreen = () => {
     switch (currentScreen) {
       case 'Home':
         return (
-          <View style={styles.screen}>
-            <Text style={styles.screenText}>Home Screen</Text>
-          </View>
+          <ScrollView style={styles.screen} contentContainerStyle={styles.scrollContent}>
+            <CustomCalendar onDateSelect={handleDateSelect} />
+          </ScrollView>
         );
       case 'Timeline':
         return (
@@ -102,7 +108,9 @@ const HomeScreen = () => {
       <View style={styles.content}>
         {renderScreen()}
       </View>
-      <CustomBottomNavigation onTabPress={handleTabPress} />
+      <SafeAreaView style={{ backgroundColor: '#c13e58' }}>
+        <CustomBottomNavigation onTabPress={handleTabPress} />
+      </SafeAreaView>
     </View>
   );
 };
@@ -117,8 +125,19 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  scrollContent: {
+    paddingTop: 60,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  screenTitle: {
+    fontSize: 28,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   screenText: {
     fontSize: 24,
@@ -137,6 +156,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    overflow: 'hidden',
   },
   tabBar: {
     flexDirection: 'row',
@@ -153,12 +173,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   iconWrapper: {
-    width: 50,
-    height: 50,
-    borderRadius: 25, 
+    width: 48,
+    height: 48,
+    borderRadius: 24, // This makes it circular (half of width/height)
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden', 
+    overflow: 'hidden', // Fixed typo: was 'overdflow'
   },
   activeIconWrapper: {
     backgroundColor: '#6a2230',
