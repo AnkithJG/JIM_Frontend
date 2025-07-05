@@ -52,7 +52,7 @@ export default function AnimatedSplash({ onContinue }) {
     <Pressable style={styles.container} onPress={onContinue}>
       <Animated.Image
         source={require("../assets/copy.png")}
-        style={[{ width: '100%', height: 120, resizeMode: 'contain' }, imageStyle]}
+        style={[{ width: '100%', height: 130, resizeMode: 'contain' }, imageStyle]}
       />
       <Animated.Text style={[styles.text, textStyle]}>
         Tap anywhere to continue

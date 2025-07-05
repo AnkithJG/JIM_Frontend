@@ -177,7 +177,7 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
     <Animated.Image
       source={require('../assets/copy.png')}
-      style={[{ width: '100%', height: 120, resizeMode: 'contain' }, imageStyle]}
+      style={[{ width: '100%', height: 130, resizeMode: 'contain' }, imageStyle]}
     />
 
       <KeyboardAvoidingView
