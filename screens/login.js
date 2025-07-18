@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Image,
+  Alert as RNAlert, // Renamed to avoid conflict
 } from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
@@ -31,6 +32,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [isFocusedP, setIsFocusedP] = useState(false);
+  const [showAlert, setShowAlert] = useState(null); // For managing alerts
 
 
   const imageScale = useSharedValue(0);
@@ -43,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     imageScale.value = withTiming(1, {
-      duration: 500,
+      duration: 700,
       easing: Easing.bounce,
     });
 
@@ -125,10 +127,8 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     if (!username || !password) {
-      <Alert action="error" variant="solid">
-        <AlertIcon as={InfoIcon} />
-        <AlertText>Please enter your username and password</AlertText>
-    </Alert>
+      // Use React Native's built-in Alert for now
+      RNAlert.alert('Error', 'Please enter your username and password');
       return;
     }
 
@@ -146,17 +146,11 @@ const LoginScreen = ({ navigation }) => {
 
       if (response.data.token) {
         navigation.navigate('Home');
-        <Alert action="success" variant="solid">
-          <AlertIcon as={InfoIcon} />
-          <AlertText>Login Successful</AlertText>
-        </Alert>
+        RNAlert.alert('Success', 'Login Successful');
       }
     } catch (err) {
       console.error('Login error:', err.response?.data?.error || err.message);
-      <Alert action="error" variant="solid">
-          <AlertIcon as={InfoIcon} />
-          <AlertText>Login failed. Please check your credentials.</AlertText>
-      </Alert>
+      RNAlert.alert('Error', 'Login failed. Please check your credentials.');
     }
   };
 
@@ -167,24 +161,24 @@ const LoginScreen = ({ navigation }) => {
 
   const navigateToSignup = () => {
     navigation.navigate('Signup');
-      <Alert action="info" variant="solid">
-          <AlertIcon as={InfoIcon} />
-          <AlertText>Navigating to signup page...</AlertText>
-      </Alert>
   };
 
   return (
     <SafeAreaView style={styles.container}>
-    <Animated.Image
-      source={require('../assets/copy.png')}
-      style={[{ width: '100%', height: 130, resizeMode: 'contain' }, imageStyle]}
-    />
+        <View style={styles.imageContainer}>
+          <Animated.Image
+            source={require('../assets/copy.png')}
+            style={[{ width: '120%', height: 120, resizeMode: 'contain' }, imageStyle]}
+          />
+        </View>
+
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
+
           <Animated.View style={[styles.formContainer, containerStyle]}>
             <Animated.View style={[styles.inputGroup, usernameStyle]}>
               <Text style={styles.label}>Username</Text>
@@ -208,7 +202,6 @@ const LoginScreen = ({ navigation }) => {
                     placeholder="Enter username"
                     placeholderTextColor="#ddd"
                     autoCapitalize="none"
-                    keyboardType="username-address"
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     style={{
@@ -235,7 +228,7 @@ const LoginScreen = ({ navigation }) => {
                 }}
               >
                 <InputField
-                  type="password"
+                  secureTextEntry={true}
                   value={password}
                   onChangeText={setPassword}
                   placeholder="Enter password"
@@ -293,6 +286,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 10, // Reduced from default to bring container up
   },
   formContainer: {
     width: '100%',
@@ -359,6 +353,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },  
+    imageContainer: {
+    alignItems: 'center',
+    paddingTop: 80,
+    paddingBottom: 0, // Reduced from 20 to 10 to bring container closer
+  },
 
 });
 
