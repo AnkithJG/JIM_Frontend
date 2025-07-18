@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
   const [isFocusedP, setIsFocusedP] = useState(false);
   const [showAlert, setShowAlert] = useState(null); // For managing alerts
 
-
+  // Separate animations for image and form elements
   const imageScale = useSharedValue(0);
   const containerScale = useSharedValue(0);
   const usernameScale = useSharedValue(0);
@@ -44,42 +44,42 @@ const LoginScreen = ({ navigation }) => {
   const loginScale = useSharedValue(0);
 
   useEffect(() => {
+    // Image appears first
     imageScale.value = withTiming(1, {
       duration: 700,
       easing: Easing.bounce,
     });
 
+    // Then the form container
     containerScale.value = withDelay(200, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
-    
+      duration: 500,
+      easing: Easing.bounce,
+    }));
 
     usernameScale.value = withDelay(400, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
+      duration: 500,
+      easing: Easing.bounce,
+    }));
     
     passwordScale.value = withDelay(600, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
+      duration: 500,
+      easing: Easing.bounce,
+    }));
 
     signUpScale.value = withDelay(800, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
+      duration: 500,
+      easing: Easing.bounce,
+    }));
 
     cancelScale.value = withDelay(1000, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
+      duration: 500,
+      easing: Easing.bounce,
+    }));
 
     loginScale.value = withDelay(1200, withTiming(1, {
-    duration: 500,
-    easing: Easing.bounce,
-  }));
-
+      duration: 500,
+      easing: Easing.bounce,
+    }));
   }, []);
 
   const imageStyle = useAnimatedStyle(() => {
@@ -112,18 +112,17 @@ const LoginScreen = ({ navigation }) => {
     };
   });
 
-    const cancelStyle = useAnimatedStyle(() => {
+  const cancelStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: cancelScale.value }],
     };
   });
 
-    const loginStyle = useAnimatedStyle(() => {
+  const loginStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: loginScale.value }],
     };
   });
-
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -165,28 +164,31 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Animated.Image
-            source={require('../assets/copy.png')}
-            style={[{ width: '120%', height: 120, resizeMode: 'contain' }, imageStyle]}
-          />
-        </View>
-
-
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
       >
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView 
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.mainContainer}>
+            {/* Image section - now inside the scrollable container */}
+            <Animated.View style={[styles.imageContainer, imageStyle]}>
+              <Image
+                source={require('../assets/copy.png')}
+                style={styles.image}
+              />
+            </Animated.View>
 
-          <Animated.View style={[styles.formContainer, containerStyle]}>
-            <Animated.View style={[styles.inputGroup, usernameStyle]}>
-              <Text style={styles.label}>Username</Text>
+            {/* Form section */}
+            <Animated.View style={[styles.formContainer, containerStyle]}>
+              <Animated.View style={[styles.inputGroup, usernameStyle]}>
+                <Text style={styles.label}>Username</Text>
                 <Input
                   style={{
                     width: '100%',
                     height: 50,
-                    //backgroundColor: '#8f2e3f',
                     backgroundColor: '#6a2230',
                     borderRadius: 40,
                     paddingHorizontal: 10,
@@ -210,12 +212,12 @@ const LoginScreen = ({ navigation }) => {
                     }}
                   />
                 </Input>
-            </Animated.View>
+              </Animated.View>
 
-            <Animated.View style={[styles.inputGroup, passwordStyle]}>
-              <Text style={styles.label}>Password</Text>
-              <Input
-                style={{
+              <Animated.View style={[styles.inputGroup, passwordStyle]}>
+                <Text style={styles.label}>Password</Text>
+                <Input
+                  style={{
                     width: '100%',
                     height: 50,
                     backgroundColor: '#6a2230',
@@ -225,47 +227,47 @@ const LoginScreen = ({ navigation }) => {
                     fontSize: 16,
                     borderWidth: isFocusedP ? 2 : 0,
                     borderColor: isFocusedP ? '#fff' : 'transparent',
-                }}
-              >
-                <InputField
-                  secureTextEntry={true}
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Enter password"
-                  autoCapitalize="none"
-                  onFocus={() => setIsFocusedP(true)}
-                  onBlur={() => setIsFocusedP(false)}
-                  style={{
-                    color: '#fff',
-                    fontSize: 16,
-                    height: 50,
                   }}
-                />
-              </Input>
-            </Animated.View>
+                >
+                  <InputField
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Enter password"
+                    autoCapitalize="none"
+                    onFocus={() => setIsFocusedP(true)}
+                    onBlur={() => setIsFocusedP(false)}
+                    style={{
+                      color: '#fff',
+                      fontSize: 16,
+                      height: 50,
+                    }}
+                  />
+                </Input>
+              </Animated.View>
 
-            <Animated.View style={[styles.signupPrompt, signUpStyle]}>
-              <Text style={styles.signupText}>Don't have an account? </Text>
-              <TouchableOpacity onPress={navigateToSignup}>
-                <Text style={styles.signupLink}>Sign Up!</Text>
-              </TouchableOpacity>
-            </Animated.View>
-
-            <View style={styles.buttonContainer}>
-              <Animated.View style={[cancelStyle]}>
-                <TouchableOpacity onPress={handleCancel} style={styles.button}>
-                  <Text style={styles.buttonText}>Cancel</Text>
+              <Animated.View style={[styles.signupPrompt, signUpStyle]}>
+                <Text style={styles.signupText}>Don't have an account? </Text>
+                <TouchableOpacity onPress={navigateToSignup}>
+                  <Text style={styles.signupLink}>Sign Up!</Text>
                 </TouchableOpacity>
               </Animated.View>
 
-              <Animated.View style={[loginStyle]}>
-                <TouchableOpacity onPress={handleLogin} style={styles.button}>
-                  <Text style={styles.buttonText}>Log In</Text>
-                </TouchableOpacity>
-              </Animated.View>
-            </View>
+              <View style={styles.buttonContainer}>
+                <Animated.View style={[cancelStyle]}>
+                  <TouchableOpacity onPress={handleCancel} style={styles.button}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </Animated.View>
 
-          </Animated.View>
+                <Animated.View style={[loginStyle]}>
+                  <TouchableOpacity onPress={handleLogin} style={styles.button}>
+                    <Text style={styles.buttonText}>Log In</Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              </View>
+            </Animated.View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -276,7 +278,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ff5b7a',
-    paddingTop: 60, 
   },
   keyboardAvoid: {
     flex: 1,
@@ -286,12 +287,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 10, // Reduced from default to bring container up
+    paddingTop: 60, // Reduced to move logo up
+    paddingBottom: 60, // Added bottom padding
+  },
+  mainContainer: {
+    width: '100%',
+    maxWidth: 400,
+    alignItems: 'center',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginBottom: 75, // Reduced margin for tighter spacing
+  },
+  image: {
+    width: 300, // Fixed width instead of percentage
+    height: 120,
+    resizeMode: 'contain',
   },
   formContainer: {
     width: '100%',
-    maxWidth: 400,
-    //backgroundColor: '#ff5b7a',
     backgroundColor: '#c13e58',
     borderRadius: 25,
     padding: 25,
@@ -302,7 +316,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 5,
     shadowRadius: 5,
     elevation: 15,
-    position: 'relative',
   },
   inputGroup: {
     width: '100%',
@@ -348,17 +361,11 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-    buttonText: {
+  buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },  
-    imageContainer: {
-    alignItems: 'center',
-    paddingTop: 80,
-    paddingBottom: 0, // Reduced from 20 to 10 to bring container closer
   },
-
 });
 
 export default LoginScreen;
