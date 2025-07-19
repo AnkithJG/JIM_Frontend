@@ -26,6 +26,7 @@ import Animated, {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupScreen = () => {
   const [username, setUsername] = useState('');
@@ -285,9 +286,15 @@ const SignupScreen = () => {
         birthdate,
       });
 
+      if (response.data.token) {
+        await AsyncStorage.setItem('userToken', response.data.token);
+        await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
+        navigation.navigate('Home');
+      }
+
       if (response.data.message) {
         RNAlert.alert('Success', 'Account created successfully!');
-        navigation.navigate('Login');
+        navigation.navigate('Home');
       }
     } catch (err) {
       console.error('Signup error:', err.response?.data?.error || err.message);

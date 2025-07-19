@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,20 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomCalendar from './calendar'; 
+import Workout from './workout';
 import { useNavigation } from '@react-navigation/native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withDelay,
+  Easing,
+} from 'react-native-reanimated';
+
 // Login Screen Component
 const Login = ({ onLogin }) => {
   return (
@@ -24,8 +34,6 @@ const Login = ({ onLogin }) => {
     </View>
   );
 };
-
-
 
 const CustomBottomNavigation = ({ onTabPress }) => {
   const [activeTab, setActiveTab] = useState('Home');
@@ -69,12 +77,62 @@ const CustomBottomNavigation = ({ onTabPress }) => {
   );
 };
 
-// Main App Component
+// Profile Screen Component with animated image
+const ProfileScreen = () => {
+  const [showWorkout, setShowWorkout] = useState(false);
+  const imageScale = useSharedValue(0);
+
+  useEffect(() => {
+    // Image appears with popping animation
+    imageScale.value = withDelay(20, withTiming(1, {
+      duration: 400,
+      easing: Easing.bounce,
+    }));
+  }, []);
+
+  const imageStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: imageScale.value }],
+    };
+  });
+
+  const handleWorkoutPress = () => {
+    setShowWorkout(true);
+  };
+
+  const handleBackFromWorkout = () => {
+    setShowWorkout(false);
+  };
+
+  if (showWorkout) {
+    return <Workout onBack={handleBackFromWorkout} />;
+  }
+
+  return (
+    <View style={styles.screen}>
+      <View style={styles.profileHeader}>
+        <Animated.View style={[styles.profileImageContainer, imageStyle]}>
+          <TouchableOpacity onPress={handleWorkoutPress} style={styles.profileImageButton}>
+            <Image
+              source={require('../assets/1.png')}
+              style={styles.profileImage}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+      <View style={styles.profileContent}>
+        <Text style={styles.screenText}>Profile Screen</Text>
+      </View>
+    </View>
+  );
+};
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentScreen, setCurrentScreen] = useState('Home');
 
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -114,8 +172,7 @@ const App = () => {
         );
       case 'Profile':
         return (
-          <View style={styles.screen}>
-          </View>
+          <ProfileScreen />
         );
       case 'Shop':
         return (
@@ -281,6 +338,35 @@ const styles = StyleSheet.create({
   },
   activeIconWrapper: {
     backgroundColor: '#6a2230',
+  },
+  profileHeader: {
+    paddingTop: 10,
+    paddingRight: 100,
+    paddingLeft: 250
+  },
+  profileImageContainer: {
+    alignSelf: 'flex-start',
+  },
+  profileImageButton: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 30,
+  },
+  profileContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
 });
 

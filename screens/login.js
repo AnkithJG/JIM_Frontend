@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Image,
-  Alert as RNAlert, // Renamed to avoid conflict
+  Alert as RNAlert,
 } from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
@@ -25,6 +25,8 @@ import Animated, {
   withDelay,
   Easing,
 } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const LoginScreen = ({ navigation }) => {
@@ -126,7 +128,6 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     if (!username || !password) {
-      // Use React Native's built-in Alert for now
       RNAlert.alert('Error', 'Please enter your username and password');
       return;
     }
@@ -144,8 +145,9 @@ const LoginScreen = ({ navigation }) => {
       });
 
       if (response.data.token) {
+        await AsyncStorage.setItem('userToken', response.data.token);
+        await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
         navigation.navigate('Home');
-        RNAlert.alert('Success', 'Login Successful');
       }
     } catch (err) {
       console.error('Login error:', err.response?.data?.error || err.message);
