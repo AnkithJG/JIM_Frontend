@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     // Image appears first
     imageScale.value = withTiming(1, {
-      duration: 700,
+      duration: 800,
       easing: Easing.bounce,
     });
 
@@ -138,7 +138,7 @@ const LoginScreen = ({ navigation }) => {
     });
 
     try {
-      const response = await axios.post(`http://10.0.2.2:3000/login`, {
+      const response = await axios.post(`http://192.168.1.138:3000/login`, {
         username,
         password,
       });

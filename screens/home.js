@@ -9,6 +9,23 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomCalendar from './calendar'; 
+import { useNavigation } from '@react-navigation/native';
+// Login Screen Component
+const Login = ({ onLogin }) => {
+  return (
+    <View style={styles.loginContainer}>
+      <Text style={styles.loginTitle}>Welcome Back</Text>
+      <TouchableOpacity 
+        style={styles.loginButton} 
+        onPress={onLogin}
+      >
+        <Text style={styles.loginButtonText}>Continue</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+
 
 const CustomBottomNavigation = ({ onTabPress }) => {
   const [activeTab, setActiveTab] = useState('Home');
@@ -52,20 +69,36 @@ const CustomBottomNavigation = ({ onTabPress }) => {
   );
 };
 
-// Example usage in your main component
-const HomeScreen = () => {
+// Main App Component
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentScreen, setCurrentScreen] = useState('Home');
+
+    const navigation = useNavigation();
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigation.navigate('Login'); // Reset to home screen
+  };
 
   const handleTabPress = (tabName) => {
     setCurrentScreen(tabName);
-    // Add your navigation logic here
     console.log(`Navigating to ${tabName}`);
   };
 
   const handleDateSelect = (date) => {
     console.log('Selected date:', date);
-    // Add your date selection logic here
   };
+
+  // Show login screen if not logged in
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   const renderScreen = () => {
     switch (currentScreen) {
       case 'Home':
@@ -77,25 +110,30 @@ const HomeScreen = () => {
       case 'Timeline':
         return (
           <View style={styles.screen}>
-            <Text style={styles.screenText}>Timeline Screen</Text>
           </View>
         );
       case 'Profile':
         return (
           <View style={styles.screen}>
-            <Text style={styles.screenText}>Profile Screen</Text>
           </View>
         );
       case 'Shop':
         return (
           <View style={styles.screen}>
-            <Text style={styles.screenText}>Shop Screen</Text>
           </View>
         );
       case 'Settings':
         return (
           <View style={styles.screen}>
-            <Text style={styles.screenText}>Settings Screen</Text>
+            <View style={styles.settingsContainer}>
+              <Text style={styles.screenText}>Settings Screen</Text>
+              <TouchableOpacity 
+                style={styles.logoutButton} 
+                onPress={handleLogout}
+              >
+                <Text style={styles.logoutButtonText}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         );
       default:
@@ -118,7 +156,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#ff5b7a', // main screen background
+    backgroundColor: '#ff5b7a',
   },
   content: {
     flex: 1,
@@ -143,6 +181,67 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  settingsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  logoutButton: {
+    backgroundColor: '#279CF6',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 25,
+    marginTop: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  loginContainer: {
+    flex: 1,
+    backgroundColor: '#ff5b7a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
+  loginTitle: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: 'bold',
+    marginBottom: 40,
+    textAlign: 'center',
+  },
+  loginButton: {
+    backgroundColor: '#279CF6',
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    borderRadius: 25,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   navContainer: {
     backgroundColor: '#c13e58',
@@ -175,14 +274,14 @@ const styles = StyleSheet.create({
   iconWrapper: {
     width: 48,
     height: 48,
-    borderRadius: 24, // This makes it circular (half of width/height)
+    borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden', // Fixed typo: was 'overdflow'
+    overflow: 'hidden',
   },
   activeIconWrapper: {
     backgroundColor: '#6a2230',
   },
 });
 
-export default HomeScreen;
+export default App;
