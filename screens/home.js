@@ -165,9 +165,10 @@ const App = () => {
             <CustomCalendar onDateSelect={handleDateSelect} />
           </ScrollView>
         );
-      case 'Timeline':
+      case 'Calendar':
         return (
           <View style={styles.screen}>
+            <Text style={styles.screenText}>Calendar Screen</Text>
           </View>
         );
       case 'Profile':
@@ -177,6 +178,7 @@ const App = () => {
       case 'Shop':
         return (
           <View style={styles.screen}>
+            <Text style={styles.screenText}>Shop Screen</Text>
           </View>
         );
       case 'Settings':
@@ -199,14 +201,15 @@ const App = () => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.content}>
+    <SafeAreaView style={styles.mainContainer}>
+      <View style={styles.contentContainer}>
         {renderScreen()}
       </View>
-      <SafeAreaView style={{ backgroundColor: 'transparent' }}>
+      {/* Fixed navbar outside of scrollable content */}
+      <View style={styles.navbarContainer}>
         <CustomBottomNavigation onTabPress={handleTabPress} />
-      </SafeAreaView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -215,8 +218,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ff5b7a',
   },
-  content: {
+  contentContainer: {
     flex: 1,
+  },
+  navbarContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+    zIndex: 1000, // Ensure it's above scrollable content
   },
   screen: {
     flex: 1,
@@ -225,7 +238,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingTop: 60,
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 120, // Increased to ensure content doesn't hide behind navbar
   },
   screenTitle: {
     fontSize: 28,
@@ -302,8 +315,6 @@ const styles = StyleSheet.create({
   },
   navContainer: {
     backgroundColor: 'transparent',
-    paddingHorizontal: 20,
-    paddingBottom: 10,
   },
   tabBar: {
     flexDirection: 'row',

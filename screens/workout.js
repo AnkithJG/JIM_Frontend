@@ -808,7 +808,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   quickActionsSection: {
-    marginBottom: 30,
+    marginBottom: 100,
   },
   quickActionsRow: {
     flexDirection: 'row',
