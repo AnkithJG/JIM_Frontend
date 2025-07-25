@@ -340,9 +340,9 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   iconWrapper: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 45,
+    height: 45,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
