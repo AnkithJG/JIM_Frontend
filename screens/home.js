@@ -39,8 +39,8 @@ const CustomBottomNavigation = ({ onTabPress }) => {
   const [activeTab, setActiveTab] = useState('Home');
 
   const tabs = [
-    { name: 'Home', icon: 'calendar' },
-    { name: 'Timeline', icon: 'time' },
+    { name: 'Home', icon: 'stats-chart' },
+    { name: 'Calendar', icon: 'calendar' },
     { name: 'Profile', icon: 'person' },
     { name: 'Shop', icon: 'cart' },
     { name: 'Settings', icon: 'settings' },
@@ -65,7 +65,7 @@ const CustomBottomNavigation = ({ onTabPress }) => {
               <View style={[styles.iconWrapper, isActive && styles.activeIconWrapper]}>
                 <Icon
                   name={isActive ? tab.icon : `${tab.icon}-outline`}
-                  size={35}
+                  size={32}
                   color="#fff"
                 />
               </View>
@@ -203,7 +203,7 @@ const App = () => {
       <View style={styles.content}>
         {renderScreen()}
       </View>
-      <SafeAreaView style={{ backgroundColor: '#c13e58' }}>
+      <SafeAreaView style={{ backgroundColor: 'transparent' }}>
         <CustomBottomNavigation onTabPress={handleTabPress} />
       </SafeAreaView>
     </View>
@@ -301,37 +301,37 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   navContainer: {
+    backgroundColor: 'transparent',
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+  },
+  tabBar: {
+    flexDirection: 'row',
     backgroundColor: '#c13e58',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    height: 75,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 32,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: -2,
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    overflow: 'hidden',
-  },
-  tabBar: {
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    height: 80,
-    justifyContent: 'space-around',
-    alignItems: 'center',
   },
   tabButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: 8,
   },
   iconWrapper: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
