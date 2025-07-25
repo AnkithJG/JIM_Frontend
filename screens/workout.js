@@ -385,14 +385,14 @@ const Workout = ({ onBack }) => {
                 style={styles.cancelButton}
                 onPress={() => setIsCreateModalVisible(false)}
               >
-                <Icon name="close-circle" size={24} color="#fff" />
+                <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={styles.confirmButton}
                 onPress={handleCreate}
               >
-                <Icon name="checkmark-circle" size={24} color="#fff" />
+                <Text style={styles.buttonText}>Create</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -425,11 +425,11 @@ const Workout = ({ onBack }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FF4757',
+    backgroundColor: '#ff5b7a',
   },
   container: {
     flex: 1,
-    backgroundColor: '#FF4757',
+    backgroundColor: '#ff5b7a',
   },
   header: {
     flexDirection: 'row',
@@ -443,9 +443,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#c13e58',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   headerTitle: {
     fontSize: 24,
@@ -456,9 +461,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#c13e58',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   placeholder: {
     width: 40,
@@ -475,17 +485,22 @@ const styles = StyleSheet.create({
   },
   menuCard: {
     width: '48%',
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: '#c13e58',
     borderRadius: 20,
     padding: 20,
     marginBottom: 15,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   menuIconContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#6a2230',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
@@ -503,10 +518,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   listItem: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: '#c13e58',
     borderRadius: 15,
     marginBottom: 10,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   listItemContent: {
     flexDirection: 'row',
@@ -517,7 +537,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#6a2230',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
@@ -544,9 +564,14 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '90%',
     maxHeight: '80%',
-    backgroundColor: '#FF4757',
-    borderRadius: 20,
+    backgroundColor: '#c13e58',
+    borderRadius: 25,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 5,
+    shadowRadius: 5,
+    elevation: 15,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -565,7 +590,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#6a2230',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -586,8 +611,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textInput: {
-    backgroundColor: 'rgba(139, 69, 89, 0.8)',
-    borderRadius: 10,
+    backgroundColor: '#6a2230',
+    borderRadius: 40,
     padding: 15,
     fontSize: 16,
     color: '#fff',
@@ -600,20 +625,35 @@ const styles = StyleSheet.create({
     borderTopColor: 'rgba(255,255,255,0.2)',
   },
   cancelButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'rgba(139, 69, 89, 0.8)',
+    width: 100,
+    height: 50,
+    borderRadius: 16,
+    backgroundColor: '#6a2230',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   confirmButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'rgba(52, 152, 219, 0.8)',
+    width: 100,
+    height: 50,
+    borderRadius: 16,
+    backgroundColor: '#279CF6',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
