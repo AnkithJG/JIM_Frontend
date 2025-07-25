@@ -132,6 +132,77 @@ const Workout = ({ onBack }) => {
             <Text style={styles.menuCardSubtitle}>Start a new workout</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Stats & Progress Section
+        <View style={styles.statsSection}>
+          <Text style={styles.sectionTitle}>This Week</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statCard}>
+              <Icon name="flame" size={30} color="#fff" />
+              <Text style={styles.statNumber}>1,247</Text>
+              <Text style={styles.statLabel}>Calories</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Icon name="time" size={30} color="#fff" />
+              <Text style={styles.statNumber}>3.2</Text>
+              <Text style={styles.statLabel}>Hours</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Icon name="trophy" size={30} color="#fff" />
+              <Text style={styles.statNumber}>12</Text>
+              <Text style={styles.statLabel}>Workouts</Text>
+            </View>
+          </View>
+        </View> */}
+
+        {/* Recent Activity */}
+        <View style={styles.recentSection}>
+          <Text style={styles.sectionTitle}>Recent Activity</Text>
+          <View style={styles.activityList}>
+            <View style={styles.activityItem}>
+              <View style={styles.activityIcon}>
+                <Icon name="checkmark-circle" size={20} color="#fff" />
+              </View>
+              <View style={styles.activityText}>
+                <Text style={styles.activityTitle}>Upper Body Blast</Text>
+                <Text style={styles.activityTime}>2 hours ago</Text>
+              </View>
+            </View>
+            <View style={styles.activityItem}>
+              <View style={styles.activityIcon}>
+                <Icon name="checkmark-circle" size={20} color="#fff" />
+              </View>
+              <View style={styles.activityText}>
+                <Text style={styles.activityTitle}>Morning Cardio</Text>
+                <Text style={styles.activityTime}>Yesterday</Text>
+              </View>
+            </View>
+            <View style={styles.activityItem}>
+              <View style={styles.activityIcon}>
+                <Icon name="checkmark-circle" size={20} color="#fff" />
+              </View>
+              <View style={styles.activityText}>
+                <Text style={styles.activityTitle}>Leg Day Special</Text>
+                <Text style={styles.activityTime}>2 days ago</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Quick Actions */}
+        <View style={styles.quickActionsSection}>
+          <Text style={styles.sectionTitle}>Quick Actions</Text>
+          <View style={styles.quickActionsRow}>
+            <TouchableOpacity style={styles.quickActionButton}>
+              <Icon name="play" size={20} color="#fff" />
+              <Text style={styles.quickActionText}>Start Last Workout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickActionButton}>
+              <Icon name="shuffle" size={20} color="#fff" />
+              <Text style={styles.quickActionText}>Random Workout</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </Animated.View>
   );
@@ -654,6 +725,115 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  // New styles for bottom content
+  statsSection: {
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 15,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: '#c13e58',
+    borderRadius: 15,
+    padding: 15,
+    alignItems: 'center',
+    marginHorizontal: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  statNumber: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginTop: 8,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.8)',
+    marginTop: 4,
+  },
+  recentSection: {
+    marginBottom: 20,
+  },
+  activityList: {
+    backgroundColor: '#c13e58',
+    borderRadius: 15,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  activityItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.1)',
+  },
+  activityIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: '#6a2230',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  activityText: {
+    flex: 1,
+  },
+  activityTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  activityTime: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.7)',
+    marginTop: 2,
+  },
+  quickActionsSection: {
+    marginBottom: 30,
+  },
+  quickActionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  quickActionButton: {
+    flex: 1,
+    backgroundColor: '#c13e58',
+    borderRadius: 15,
+    padding: 15,
+    alignItems: 'center',
+    marginHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  quickActionText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 8,
   },
 });
 
