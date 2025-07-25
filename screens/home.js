@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomCalendar from './calendar'; 
 import Workout from './workout';
+import Settings from './settings';
 import { useNavigation } from '@react-navigation/native';
 import Animated, {
   useSharedValue,
@@ -181,20 +182,8 @@ const App = () => {
             <Text style={styles.screenText}>Shop Screen</Text>
           </View>
         );
-      case 'Settings':
-        return (
-          <View style={styles.screen}>
-            <View style={styles.settingsContainer}>
-              <Text style={styles.screenText}>Settings Screen</Text>
-              <TouchableOpacity 
-                style={styles.logoutButton} 
-                onPress={handleLogout}
-              >
-                <Text style={styles.logoutButtonText}>Log Out</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
+        case 'Settings':
+          return <Settings navigation={navigation} />;
       default:
         return null;
     }
